@@ -18,8 +18,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = PinkApp.class, properties = {
     "spring.test.maria.database=pink",
-    "spring.datasource.username=pink",
-    "spring.datasource.password=pink",
+    "spring.datasource.username=root",
+    "spring.datasource.password=",
 }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMariaDB
 public class UserTest {
