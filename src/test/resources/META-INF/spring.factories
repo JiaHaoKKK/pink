@@ -1,0 +1,2 @@
+com.momo.pink.test.autoconfigure.AutoConfigureMariaDB=\
+com.momo.pink.test.autoconfigure.TestMariaDBAutoConfiguration
