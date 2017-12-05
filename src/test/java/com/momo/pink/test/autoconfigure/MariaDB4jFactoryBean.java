@@ -16,9 +16,7 @@ public class MariaDB4jFactoryBean extends MariaDB4jSpringService {
         DB db = getDB();
 
         try {
-            if (this.database != null) {
-                db.createDB(this.database);
-            }
+            db.createDB(this.database);
         } catch (ManagedProcessException e) {
             lastException = e;
             throw new IllegalStateException("MariaDB4jSpringService start() failed", e);
