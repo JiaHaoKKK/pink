@@ -16,9 +16,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = PinkApp.class, properties = {
     "encrypt.key=${encrypt.rootKey}oUzxewPh",
+    "spring.jackson.serialization.write_dates_as_timestamps=false",
     "spring.test.maria.database=pink",
     "spring.datasource.username=root",
     "spring.datasource.password=",
+    "spring.cloud.test.etcd.enable=true"
 }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMariaDB
 public class UserTest {

@@ -1,2 +1,4 @@
 com.momo.pink.test.autoconfigure.AutoConfigureMariaDB=\
 com.momo.pink.test.autoconfigure.TestMariaDBAutoConfiguration
+org.springframework.cloud.bootstrap.BootstrapConfiguration=\
+com.momo.pink.test.etcd.TestEtcdConfigBootstrapConfiguration
