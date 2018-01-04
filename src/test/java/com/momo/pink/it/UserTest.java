@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
     "encrypt.key=${encrypt.rootKey}oUzxewPh",
     "spring.jackson.serialization.write_dates_as_timestamps=false",
     "spring.test.maria.database=pink",
+    "mariaDB4j.port=3307",
     "spring.datasource.username=root",
     "spring.datasource.password=",
     "spring.cloud.test.etcd.enable=true"
