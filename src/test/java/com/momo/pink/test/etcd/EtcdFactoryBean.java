@@ -165,7 +165,8 @@ public class EtcdFactoryBean implements SmartLifecycle {
 
     @Override
     public void stop(Runnable callback) {
-
+        stop();
+        callback.run();
     }
 
     @Override
