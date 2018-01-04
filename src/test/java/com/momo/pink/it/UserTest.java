@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
     "mariaDB4j.port=3307",
     "spring.datasource.username=root",
     "spring.datasource.password=",
+    "spring.cloud.etcd.uris=http://127.0.0.1:4001",
     "spring.cloud.test.etcd.enable=true"
 }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMariaDB
