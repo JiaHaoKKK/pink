@@ -5,6 +5,8 @@ import com.opentable.etcd.EtcdInstance;
 import mousio.etcd4j.EtcdClient;
 import mousio.etcd4j.responses.EtcdException;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.etcd.config.EtcdConfigProperties;
 import org.springframework.context.SmartLifecycle;
@@ -26,6 +28,7 @@ import java.util.Properties;
 import java.util.concurrent.TimeoutException;
 
 public class EtcdFactoryBean implements SmartLifecycle {
+    private static final Logger logger = LoggerFactory.getLogger(EtcdFactoryBean.class);
     private EtcdInstance instance;
 
     @Autowired
@@ -150,6 +153,7 @@ public class EtcdFactoryBean implements SmartLifecycle {
     public void stop() {
         if (this.instance != null) {
             this.instance.stop();
+            this.instance = null;
         }
     }
 
@@ -165,8 +169,16 @@ public class EtcdFactoryBean implements SmartLifecycle {
 
     @Override
     public void stop(Runnable callback) {
-        stop();
-        callback.run();
+        logger.debug("Start stop etcd server.");
+        try {
+            stop();
+            logger.debug("Stop etcd server successfully.");
+        } catch (RuntimeException e) {
+            logger.error("Stop etcd server failed.", e);
+        } finally {
+            callback.run();
+        }
+
     }
 
     @Override
