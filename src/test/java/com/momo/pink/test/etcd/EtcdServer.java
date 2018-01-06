@@ -12,6 +12,7 @@ import org.springframework.cloud.etcd.config.EtcdConfigProperties;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.event.ContextClosedEvent;
+import org.springframework.core.Ordered;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 
@@ -28,7 +29,7 @@ import java.util.Enumeration;
 import java.util.Properties;
 import java.util.concurrent.TimeoutException;
 
-public class EtcdServer implements ApplicationContextInitializer {
+public class EtcdServer implements ApplicationContextInitializer, Ordered {
     private static final Logger logger = LoggerFactory.getLogger(EtcdServer.class);
     private EtcdInstance instance;
 
@@ -162,5 +163,10 @@ public class EtcdServer implements ApplicationContextInitializer {
                 this.stop();
             }
         });
+    }
+
+    @Override
+    public int getOrder() {
+        return Ordered.HIGHEST_PRECEDENCE + 9;
     }
 }
