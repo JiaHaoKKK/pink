@@ -9,9 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.etcd.config.EtcdConfigProperties;
-import org.springframework.context.SmartLifecycle;
+import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 
 import java.io.IOException;
@@ -27,8 +28,8 @@ import java.util.Enumeration;
 import java.util.Properties;
 import java.util.concurrent.TimeoutException;
 
-public class EtcdFactoryBean implements SmartLifecycle {
-    private static final Logger logger = LoggerFactory.getLogger(EtcdFactoryBean.class);
+public class EtcdServer implements ApplicationContextInitializer {
+    private static final Logger logger = LoggerFactory.getLogger(EtcdServer.class);
     private EtcdInstance instance;
 
     @Autowired
@@ -37,10 +38,6 @@ public class EtcdFactoryBean implements SmartLifecycle {
     @Autowired
     private EtcdConfigProperties properties;
 
-    @Autowired
-    private ResourceLoader resourceLoader;
-
-    @Override
     public void start() {
         EtcdConfiguration configuration = new EtcdConfiguration();
         //configuration.setDiscoveryUri("");
@@ -77,7 +74,7 @@ public class EtcdFactoryBean implements SmartLifecycle {
 
     public void migrate() throws URISyntaxException, IOException {
 
-        ClassLoader classLoader = EtcdFactoryBean.class.getClassLoader();
+        ClassLoader classLoader = EtcdServer.class.getClassLoader();
         URL etcdURL = classLoader.getResource("etcd/config/");
         if (etcdURL != null) {
             Path rootDir = Paths.get(etcdURL.toURI());
@@ -149,40 +146,21 @@ public class EtcdFactoryBean implements SmartLifecycle {
         }
     }
 
-    @Override
     public void stop() {
+        logger.info("Start stop etcd server.");
         if (this.instance != null) {
             this.instance.stop();
-            this.instance = null;
         }
+        logger.info("Stop etcd server successfully.");
     }
 
     @Override
-    public boolean isRunning() {
-        return this.instance != null;
-    }
-
-    @Override
-    public boolean isAutoStartup() {
-        return true;
-    }
-
-    @Override
-    public void stop(Runnable callback) {
-        logger.debug("Start stop etcd server.");
-        try {
-            stop();
-            logger.debug("Stop etcd server successfully.");
-        } catch (RuntimeException e) {
-            logger.error("Stop etcd server failed.", e);
-        } finally {
-            callback.run();
-        }
-
-    }
-
-    @Override
-    public int getPhase() {
-        return 7;
+    public void initialize(ConfigurableApplicationContext applicationContext) {
+        this.start();
+        applicationContext.addApplicationListener(e -> {
+            if (e instanceof ContextClosedEvent) {
+                this.stop();
+            }
+        });
     }
 }

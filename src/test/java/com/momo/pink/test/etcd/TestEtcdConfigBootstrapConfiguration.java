@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 public class TestEtcdConfigBootstrapConfiguration {
 
     @Bean
-    public EtcdFactoryBean etcdFactoryBean() {
-        return new EtcdFactoryBean();
+    public EtcdServer etcdServer() {
+        return new EtcdServer();
     }
 }
