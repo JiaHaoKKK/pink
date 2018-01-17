@@ -11,6 +11,7 @@ import org.springframework.core.env.MapPropertySource;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.StandardEnvironment;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootApplication
@@ -24,8 +25,9 @@ public class PinkApp {
     public static void main(String[] args) {
         StandardEnvironment env = new StandardEnvironment();
         MutablePropertySources propertySources = env.getPropertySources();
-        propertySources.addLast(new MapPropertySource("encrypt", Map.of(
-            "encrypt.key", "${encrypt.rootKey}oUzxewPh")));  //naN8cE/CoUzxewPh
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("encrypt.key", "${encrypt.rootKey}oUzxewPh"); //naN8cE/CoUzxewPh
+        propertySources.addLast(new MapPropertySource("encrypt", properties));
         new SpringApplicationBuilder(PinkApp.class)
             .properties("spring.jackson.serialization.write_dates_as_timestamps", "false")
             .environment(env)
