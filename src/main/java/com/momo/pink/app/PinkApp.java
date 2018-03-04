@@ -151,7 +151,6 @@ public class PinkApp {
         properties.put("encrypt.key", "${encrypt.rootKey}oUzxewPh"); //naN8cE/CoUzxewPh
         propertySources.addLast(new MapPropertySource("encrypt", properties));
         new SpringApplicationBuilder(PinkApp.class)
-            .properties("spring.jackson.serialization.write_dates_as_timestamps", "false")
             .environment(env)
             .build()
             .run(args);
