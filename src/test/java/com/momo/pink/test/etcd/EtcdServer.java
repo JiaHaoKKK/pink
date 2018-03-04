@@ -3,6 +3,7 @@ package com.momo.pink.test.etcd;
 import com.opentable.etcd.EtcdConfiguration;
 import com.opentable.etcd.EtcdInstance;
 import mousio.etcd4j.EtcdClient;
+import mousio.etcd4j.responses.EtcdAuthenticationException;
 import mousio.etcd4j.responses.EtcdException;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -84,7 +85,7 @@ public class EtcdServer implements ApplicationContextInitializer, Ordered {
                 .forEach(p -> {
                     try {
                         doMigrate(rootDir, p);
-                    } catch (IOException | EtcdException | TimeoutException e) {
+                    } catch (IOException | EtcdException | TimeoutException | EtcdAuthenticationException e) {
                         throw new RuntimeException(e);
                     }
                 });
@@ -92,7 +93,7 @@ public class EtcdServer implements ApplicationContextInitializer, Ordered {
         }
     }
 
-    private void doMigrate(Path rootDir, Path file) throws IOException, TimeoutException, EtcdException {
+    private void doMigrate(Path rootDir, Path file) throws IOException, TimeoutException, EtcdException, EtcdAuthenticationException {
         String etcdRootDir = "/" + properties.getPrefix();
         Path configDir = file.getParent();
         Path dir = configDir.subpath(rootDir.getNameCount(), configDir.getNameCount());
