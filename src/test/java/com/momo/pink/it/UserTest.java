@@ -2,7 +2,6 @@ package com.momo.pink.it;
 
 import com.momo.pink.User;
 import com.momo.pink.app.PinkApp;
-import com.momo.pink.test.autoconfigure.AutoConfigureMariaDB;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
     "spring.cloud.etcd.uris=http://127.0.0.1:4001",
     "spring.cloud.test.etcd.enable=true"
 }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMariaDB
 public class UserTest {
 
     @Autowired
