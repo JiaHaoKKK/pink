@@ -6,10 +6,13 @@ import com.momo.pink.User;
 import com.momo.pink.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("api/v1.0/users")
 public class UserController {
@@ -59,4 +62,19 @@ public class UserController {
     public List<User> listUsers() {
         return userService.listUsers();
     }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/self")
+    @ResponseBody
+    public User self(OAuth2Authentication principal) {
+        User user = userService.getUser(principal.getName());
+        if (user == null) {
+            Authentication userAuthentication = principal.getUserAuthentication();
+            @SuppressWarnings("unchecked")
+            Map<String, String> details = (Map<String, String>) userAuthentication.getDetails();
+            user = addUser(new User().setName(principal.getName())
+                .setEmail(details.get("email")));
+        }
+        return user;
+    }
+
 }

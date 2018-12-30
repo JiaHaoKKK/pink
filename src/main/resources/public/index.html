@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Pink</title>
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
-    <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="//unpkg.com/vue-material/dist/vue-material.css">
+    <meta content="width=device-width,initial-scale=1,minimal-ui" name="viewport">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons">
+    <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/vue-material.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default.css">
     <script src="//unpkg.com/vue"></script>
-    <script src="//unpkg.com/vue-material"></script>
+    <script src="https://unpkg.com/vue-material@beta"></script>
 </head>
 <body>
 <div id="app">
@@ -23,6 +24,7 @@
                 <md-checkbox v-bind:id="'' + todo.id" v-bind:name="todo.title"
                              v-model="todo.completed">{{todo.title}}
                 </md-checkbox>
+            </md-list-item>
         </md-list>
         <md-dialog md-open-from="#fab" md-close-to="#fab" ref="newTask">
             <md-dialog-title>Create new task</md-dialog-title>

@@ -44,6 +44,7 @@ import static springfox.documentation.schema.AlternateTypeRules.newRule;
 @EnableSwagger2
 @Import({
     BeanValidatorPluginsConfiguration.class,
+    WebSecurityConfigurer.class,
     OwnerConfiguration.class,
     TodoConfiguration.class
 })
