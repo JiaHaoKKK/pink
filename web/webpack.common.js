@@ -1,12 +1,13 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-
+const ExtractTextWebpackPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
   entry: './src/index.js',
   plugins: [
     new CleanWebpackPlugin(),
+    new ExtractTextWebpackPlugin("styles.css"),
     new HtmlWebpackPlugin({
       title: "Pink",
       inject: false,
@@ -22,7 +23,7 @@ module.exports = {
   module: {
     rules: [{
       test: /\.css$/,
-      use: ['style-loader', 'css-loader']
+      use: ExtractTextWebpackPlugin.extract(['css-loader'])
     },{
       test: /\.js$/,
       use: ['babel-loader'],
