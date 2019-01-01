@@ -15,8 +15,8 @@ module.exports = {
       appMountId: 'app',
       mobile: true,
       scripts: [
-        '//unpkg.com/react@16/umd/react.development.js',
-        '//unpkg.com/react-dom@16/umd/react-dom.development.js'
+        '//unpkg.com/react@16/umd/react.production.min.js',
+        '//unpkg.com/react-dom@16/umd/react-dom.production.min.js'
       ]
     }),
   ],
