@@ -14,6 +14,10 @@ module.exports = {
       template: require('html-webpack-template'),
       appMountId: 'app',
       mobile: true,
+      scripts: [
+        '//unpkg.com/react@16/umd/react.development.js',
+        '//unpkg.com/react-dom@16/umd/react-dom.development.js'
+      ]
     }),
   ],
   output: {
@@ -37,8 +41,8 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js']
   },
-  // externals: {
-  //   'react': 'React',
-  //   'react-dom': 'ReactDOM'
-  // }
+  externals: {
+    'react': 'React',
+    'react-dom': 'ReactDOM'
+  }
 };
